@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using NZWalks.API.CustomActionFilters;
 
 namespace NZWalks.API.Controllers
 {
@@ -84,35 +85,9 @@ namespace NZWalks.API.Controllers
         }
 
         [HttpPost("")]
+        [ValidateModel]
         public async Task<IActionResult> Create([FromBody] AddRegionRequestDto addRegionRequestDto)
         {
-            #region Old Mapping
-            // Map / Convert DTO to Domain Model
-            //var regionDomainModel = new Region
-            //{
-            //    Code = addRegionRequestDto.Code,
-            //    Name = addRegionRequestDto.Name,
-            //    RegionImageUrl = addRegionRequestDto.RegionImageUrl
-            //};
-            // Use Domain Model to create Region
-            //regionDomainModel = await regionRepository.CreateAsync(regionDomainModel);
-            // make it await
-
-
-            //await dbContext.Regions.AddAsync(regionDomainModel);
-            //await dbContext.SaveChangesAsync();
-
-            // Map Domain Model back to DTO 
-            //var regionDto = new RegionDTO
-            //{
-            //    Id = regionDomainModel.Id,
-            //    Code = regionDomainModel.Code,
-            //    Name = regionDomainModel.Name,
-            //    RegionImageUrl = regionDomainModel.RegionImageUrl
-            //};
-            //return CreatedAtAction(nameof(GetById), new { id = regionDto.Id }, regionDto);
-
-            #endregion
             // using automapper
             // Map / Convert DTO to Domain Model
             var regionDomainModel = mapper.Map<Region>(addRegionRequestDto);
@@ -126,61 +101,23 @@ namespace NZWalks.API.Controllers
         // Update region 
         // PUT: https://localhost:portnumber/api/regions/{id} 
         [HttpPut("{id:guid}")]
+        [ValidateModel]
         public async Task <IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto updateRegionRequestDto)
         {
-            #region Old Mapping
-            // Get region from database // Check if region exists
-            //var regionDomainModel = await dbContext.Regions.FirstOrDefaultAsync(x => x.Id == id);
-            // map Dto to Domain Model
-            //var regionDomainModel = new Region
-            //{
-            //    Code = updateRegionRequestDto.Code,
-            //    Name = updateRegionRequestDto.Name,
-            //    RegionImageUrl = updateRegionRequestDto.RegionImageUrl
-            //};
-            // make it await
-            //regionDomainModel = await regionRepository.UpdateAsync(id, regionDomainModel);
-            // Check if region exists
-            //if (regionDomainModel == null)
-            //{
-            //    return NotFound();
-            //}
-            // Update region // Map /Convert DTO to Domain Model
-            //regionDomainModel.Code = updateRegionRequestDto.Code;
-            //regionDomainModel.Name = updateRegionRequestDto.Name;
-            //regionDomainModel.RegionImageUrl = updateRegionRequestDto.RegionImageUrl;
-
-            // Save changes 
-            //await dbContext.SaveChangesAsync();
-
-
-            // Map Domain Model back to DTO 
-            //var regionDto = new RegionDTO
-            //{
-            //    Id = regionDomainModel.Id,
-            //    Code = regionDomainModel.Code,
-            //    Name = regionDomainModel.Name,
-            //    RegionImageUrl = regionDomainModel.RegionImageUrl
-            //};
-            //return Ok(regionDto);
-            #endregion
-            // using automapper
-            // Get region from database // Check if region exists
-            var regionDomainModel = await regionRepository.GetByIdAsync(id);
-            // map Dto to Domain Model
-            regionDomainModel = mapper.Map<Region>(updateRegionRequestDto);
-            // make it await
-            regionDomainModel = await regionRepository.UpdateAsync(id, regionDomainModel);
-            // Check if region exists
-            if (regionDomainModel == null)
-            {
-                return NotFound();
-            }
-
-            // Map Domain Model back to DTO
-            var regionDto = mapper.Map<RegionDTO>(regionDomainModel);
-            return Ok(regionDto);
-
+                // using automapper
+                // Get region from database // Check if region exists
+                var regionDomainModel = await regionRepository.GetByIdAsync(id);
+                // map Dto to Domain Model
+                regionDomainModel = mapper.Map<Region>(updateRegionRequestDto);
+                // make it await
+                regionDomainModel = await regionRepository.UpdateAsync(id, regionDomainModel);
+                // Check if region exists
+                if (regionDomainModel == null)
+                {
+                    return NotFound();
+                }
+                // Map Domain Model back to DTO
+                return Ok(mapper.Map<RegionDTO>(regionDomainModel));
         }
 
         // Delete region

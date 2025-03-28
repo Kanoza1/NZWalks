@@ -6,3 +6,4 @@ global using NZWalks.API.Data;
 global using NZWalks.API.Models.Domain;
 global using NZWalks.API.Models.DTO;
 global using NZWalks.API.Repositories;
+global using System.ComponentModel.DataAnnotations;
