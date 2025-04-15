@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using NZWalks.API.CustomActionFilters;
 
 namespace NZWalks.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+
     public class RegionsController : ControllerBase
     {
         private readonly NZWalksDbContext dbContext;
@@ -17,31 +19,9 @@ namespace NZWalks.API.Controllers
             this.mapper = mapper;
         }
         [HttpGet("")]
+        [Authorize(Roles = "Reader")]
         public async Task <IActionResult> GetAll()
         {
-            #region Old Mapping
-            // Get data from database 
-            //var regionsDomain = await dbContext.Regions.ToListAsync();
-            //var regionsDomain = await regionRepository.GetAllAsync();
-
-            // map Domain Models to DTOs
-            //var regionsDto = new List<RegionDTO>();
-            //foreach (var regionDomain in regionsDomain)
-            //{
-            //    regionsDto.Add(new RegionDTO()
-            //    {
-            //            Id = regionDomain.Id,
-            //            Code = regionDomain.Code,
-            //            Name = regionDomain.Name,
-            //            RegionImageUrl = regionDomain.RegionImageUrl
-
-            //    });
-            //}
-            // Return DTOs 
-            //var regions = dbContext.Regions.ToList();
-            //return Ok(regionsDto);
-            #endregion
-
             // using automapper
             var regionsDomain = await regionRepository.GetAllAsync();
             // Map Domain Model to DTO
@@ -51,26 +31,10 @@ namespace NZWalks.API.Controllers
         }
 
         [HttpGet("{id:guid}")]
+        [Authorize(Roles ="Reader")]
+
         public async Task <IActionResult> GetById ([FromRoute]Guid id)
         {
-            #region Old Mapping 
-            // Get region Domain Model from Database 
-
-            // Make function await 
-
-            //var regionDomain =  await dbContext.Regions.FirstOrDefaultAsync(x => x.Id == id);
-            // Map/Convert Region Domain Model to Region DTO 
-
-            //var regionDto = new RegionDTO
-            //{
-            //    Id = regionDomain.Id,
-            //    Code = regionDomain.Code,
-            //    Name = regionDomain.Name,
-            //    RegionImageUrl = regionDomain.RegionImageUrl
-            //};
-            // return Dto back to client 
-            //return Ok(regionDto);
-            #endregion
 
             var regionDomain = await regionRepository.GetByIdAsync(id);
 
@@ -86,6 +50,7 @@ namespace NZWalks.API.Controllers
 
         [HttpPost("")]
         [ValidateModel]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Create([FromBody] AddRegionRequestDto addRegionRequestDto)
         {
             // using automapper
@@ -102,6 +67,7 @@ namespace NZWalks.API.Controllers
         // PUT: https://localhost:portnumber/api/regions/{id} 
         [HttpPut("{id:guid}")]
         [ValidateModel]
+        [Authorize(Roles = "Writer")]
         public async Task <IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto updateRegionRequestDto)
         {
                 // using automapper
@@ -123,31 +89,10 @@ namespace NZWalks.API.Controllers
         // Delete region
         // DELETE: https://localhost:portnumber/api/regions/{id}
         [HttpDelete("{id:guid}")]
+        [ValidateModel]
+        [Authorize(Roles = "Writer,Reader")]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
-            #region Old Mapping
-            // Get region from database // Check if region exists
-            //var regionDomainModel = await dbContext.Regions.FirstOrDefaultAsync(x => x.Id == id);
-            //var regionDomainModel = await regionRepository.DeleteAsync(id);
-            //if (regionDomainModel == null)
-            //{
-            //    return NotFound();
-            //}
-            //// Delete region
-            ////dbContext.Regions.Remove(regionDomainModel);
-            ////await dbContext.SaveChangesAsync();
-
-            //// return deleted region back 
-            //// map Domain Model to DTO
-            //var regionDto = new RegionDTO
-            //{
-            //    Id = regionDomainModel.Id,
-            //    Code = regionDomainModel.Code,
-            //    Name = regionDomainModel.Name,
-            //    RegionImageUrl = regionDomainModel.RegionImageUrl
-            //};
-            //return Ok(regionDto);
-            #endregion
             // using automapper
             // Get region from database // Check if region exists
             var regionDomainModel = await regionRepository.DeleteAsync(id);
