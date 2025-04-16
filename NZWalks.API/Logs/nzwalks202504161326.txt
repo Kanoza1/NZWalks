@@ -1,0 +1,14 @@
+2025-04-16 13:26:57.487 +02:00 [INF] User profile is available. Using 'C:\Users\Future\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-04-16 13:26:57.633 +02:00 [INF] Now listening on: https://localhost:7099
+2025-04-16 13:26:57.635 +02:00 [INF] Now listening on: http://localhost:5001
+2025-04-16 13:26:57.685 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-04-16 13:26:57.687 +02:00 [INF] Hosting environment: Development
+2025-04-16 13:26:57.688 +02:00 [INF] Content root path: D:\projects\NZWalks\NZWalks.API
+2025-04-16 13:26:57.790 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7099/swagger/index.html - null null
+2025-04-16 13:26:57.975 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7099/swagger/index.html - 200 null text/html;charset=utf-8 186.2191ms
+2025-04-16 13:26:58.058 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7099/_framework/aspnetcore-browser-refresh.js - null null
+2025-04-16 13:26:58.058 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7099/_vs/browserLink - null null
+2025-04-16 13:26:58.068 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7099/_framework/aspnetcore-browser-refresh.js - 200 16507 application/javascript; charset=utf-8 9.2975ms
+2025-04-16 13:26:58.089 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7099/_vs/browserLink - 200 null text/javascript; charset=UTF-8 30.1468ms
+2025-04-16 13:26:58.155 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7099/swagger/v1/swagger.json - null null
+2025-04-16 13:26:58.185 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7099/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 30.0519ms
